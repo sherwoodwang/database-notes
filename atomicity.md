@@ -33,7 +33,7 @@ If we assume that the writing operations for different sectors are isolated, an 
 
 `lsblk -td` can be used to check the sector size of a block device.
 
-Sometimes, the block size can be changed. For an SCSI disk, it can be done with
+Sometimes, the sector size can be changed. For an SCSI disk, it can be done with
 
     hdparm --set-sector-size 4096 --please-destroy-my-drive /dev/sdX
 
@@ -41,10 +41,14 @@ For a NVMe disk, it can be done with
 
     nvme format --lbaf=1 /dev/nvmeXnX
 
+#### Concerns of Cache Page Size
+
+When I/O is done with `mmap`, the minimum unit of a writing operation cannot be smaller than a page. If a page is larger than a sector, the isolation among sectors is still broken implicitly.
+
 ### Alignment
 
 EXT4 filesystem supports `bigalloc` feature to ensure the alignment of extents of files.
 
-#### Native Atomicity
+### Native Atomicity
 
 Flash memory seems all supporting certain level of native atomicity, which is exposed with `AWUPF` field.
