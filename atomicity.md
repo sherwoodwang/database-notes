@@ -29,7 +29,7 @@ Considerations
 
 If we assume that the writing operations for different sectors are isolated, an application needs to be able to access the sector size of underlying device of a file.
 
-`stat()` can be used to read the block size of underlying filesystem. The value is `st_blksize`. Ideally, the block size of filesystem is equal or larger than the sector size of underlying device. However, it's possible that the block size of filesystem is misconfigured when it's formatted.
+`stat()` can be used to read the block size of underlying filesystem. The value is `st_blksize`. Ideally, the block size of filesystem is equal or larger than the sector size of underlying device. However, it's possible that the block size of filesystem is misconfigured when it's formatted, which would also break the internal journaling mechanism of the filesystem.
 
 `lsblk -td` can be used to check the sector size of a block device.
 
@@ -46,6 +46,8 @@ For a NVMe disk, it can be done with
 When I/O is done with `mmap`, the minimum unit of a writing operation cannot be smaller than a page. If a page is larger than a sector, the isolation among sectors is still broken implicitly.
 
 ### Alignment
+
+XFS supports setting block size to a value from 512 to 65536. The default is 4096.
 
 EXT4 filesystem supports `bigalloc` feature to ensure the alignment of extents of files.
 
