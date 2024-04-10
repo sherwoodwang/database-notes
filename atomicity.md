@@ -33,7 +33,7 @@ If we assume that the writing operations for different sectors are isolated, an 
 
 `lsblk -td` can be used to check the sector size of a block device.
 
-Sometimes, the sector size can be changed. For an SCSI disk, it can be done with
+Sometimes, the sector size can be changed. For a SCSI disk, it can be done with
 
     hdparm --set-sector-size 4096 --please-destroy-my-drive /dev/sdX
 
@@ -53,4 +53,4 @@ EXT4 filesystem supports `bigalloc` feature to ensure the alignment of extents o
 
 ### Native Atomicity
 
-Flash memory seems all supporting certain level of native atomicity, which is exposed with `AWUPF` field.
+NVM disks seem all supporting certain level of native atomicity, which is exposed with `AWUPF` field.
