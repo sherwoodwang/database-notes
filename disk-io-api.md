@@ -24,6 +24,8 @@ Operations can be done in a zero-copy manner.
 
 Cache might be polluted if `madvice()` is not used properly. See [a performance benchmark](https://smalldatum.blogspot.com/2022/05/using-mmap-with-rocksdb.html) conducted by Mark Callaghan, the author of RocksDB.
 
+The invocation to `madvice()` can be a considerable overhead by itself.
+
 A write to a page can cause an implicit read to fill it.
 
 A page fault can block a thread. The application cannot anticipate it and schedule other computational tasks.
@@ -39,3 +41,7 @@ The current implementation in Linux is provided in user space by glibc.
 ## io_uring
 
 The availability seems limited for now.
+
+`O_DIRECT` is still available.
+
+`madvice()` can also be submitted with `io_uring`.
