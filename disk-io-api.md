@@ -34,9 +34,9 @@ A page fault can block a thread. `mincore()` can be used to determine the presen
 
 Each time, only one page gets page faults. The use of `madvice()` is necessary to submit multiple concurrent read requests.
 
-Although Linux does not currently support huge pages as mapped pages of files, a 4KiB page can still be larger than the minimum I/O unit of the underlying hardware.
+Although Linux does not currently support huge pages as mapped pages of files, a 4KiB page can still be larger than the minimum I/O unit of the underlying hardware. Buffered read is not better than memory-mapped read because they share the same underlying 4KiB pages.
 
-The performance of the Translate Lookaside Buffer can significantly impact the efficiency of memory-mapped I/O. When dealing with a large mapped file, the likelihood of encountering a cache miss with the TLB increases.
+The performance of the Translate Lookaside Buffer can significantly impact the efficiency of memory-mapped I/O. When dealing with a large mapped file, the likelihood of encountering a cache miss with the TLB increases. But it can still be cheaper than a syscall.
 
 ## POSIX AIO
 
